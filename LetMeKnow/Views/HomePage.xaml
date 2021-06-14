@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LetMeKnow.ViewModels"
+             xmlns:conv="clr-namespace:LetMeKnow.Converters"
+             x:Class="LetMeKnow.Views.HomePage">
+    <ContentPage.BindingContext>
+        <vm:HomeViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:VaccineSlotTextValueConverter x:Key="slotsToText" />
+            <conv:HumanizeDateValueConverter x:Key="humanizeDate" />
+            <conv:InverseBooleanValueConverter x:Key="inverseBoolean" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Padding="5,5">
+            <Frame IsVisible="{Binding HasNoAppointments}">
+                <Label Text="No Vaccination center is available for booking."
+                       FontAttributes="Bold"/>
+            </Frame>
+            <ListView ItemsSource="{Binding Appointments}" 
+                      IsPullToRefreshEnabled="True" 
+                      IsRefreshing="{Binding HasRefreshed}" 
+                      RefreshCommand="{Binding RefreshCommand}"
+                      HasUnevenRows="True"
+                      SelectionMode="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="10" BorderColor="#c7c2c2" Padding="10" Margin="5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="28"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding CentreName}" 
+                                           TextTransform="Uppercase"
+                                           TextColor="#002060" FontSize="12"/>
+                                    <Label Grid.Column="2"
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="End"
+                                        Text="{Binding Date, Converter={StaticResource humanizeDate}}" 
+                                           TextTransform="Uppercase"
+                                           TextColor="#002060" FontSize="12"/>
+                                    <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                           Text="{Binding CentreAddress}"
+                                           TextColor="#998fa2" FontSize="12"/>
+                                    <StackLayout Grid.Column="2" Grid.Row="1">
+                                        <Label Text="{Binding Vaccine}"
+                                               TextColor="#998fa2"
+                                               TextTransform="Uppercase"
+                                               HorizontalOptions="End"/>
+                                        <Frame Padding="8,4"
+                                               CornerRadius="5"
+                                               BackgroundColor="#048604"
+                                               HorizontalOptions="End">
+                                            <Label Text="{Binding FeeType}" FontSize="11"
+                                                   TextColor="White"
+                                                   FontAttributes="Bold"/>
+                                        </Frame>
+                                    </StackLayout>
+                                    <Frame Grid.Row="2"
+                                           CornerRadius="5"
+                                           Padding="0"
+                                           Margin="0"
+                                           BackgroundColor="#007bff">
+                                        <Frame.Triggers>
+                                            <DataTrigger TargetType="Frame"
+                                                         Value="45"
+                                                         Binding="{Binding MinAgeLimit}">
+                                                <Setter Property="BackgroundColor" Value="#970897"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Frame"
+                                                         Value="40"
+                                                         Binding="{Binding MinAgeLimit}">
+                                                <Setter Property="BackgroundColor" Value="#f44336"/>
+                                            </DataTrigger>
+                                        </Frame.Triggers>
+                                        <Label Text="{Binding MinAgeLimit, StringFormat='Age {0}+'}"
+                                               TextColor="White"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalTextAlignment="Center"
+                                               Padding="0"
+                                               Margin="0"
+                                               FontSize="13"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Frame>
+                                    <Label  Grid.Row="2" Grid.Column="1"
+                                            VerticalTextAlignment="Center"
+                                            HorizontalTextAlignment="Center"
+                                            FontSize="12"
+                                            TextColor="#998fa2">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Dose 1  "/>
+                                                <Span TextColor="Green"
+                                                      FontAttributes="Bold"
+                                                      FontSize="12"
+                                                      Text="{Binding AvailableCapacityDose1, Converter={StaticResource slotsToText}, ConverterParameter=''}"/>
+                                                <Span TextColor="Red"
+                                                      FontAttributes="Bold"
+                                                      FontSize="12"
+                                                      Text="{Binding AvailableCapacityDose1, Converter={StaticResource slotsToText}, ConverterParameter='X'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label  Grid.Row="2" Grid.Column="2"
+                                            VerticalTextAlignment="Center"
+                                            HorizontalTextAlignment="Start"
+                                            FontSize="12"
+                                            TextColor="#998fa2">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Dose 2  "/>
+                                                <Span TextColor="Green"
+                                                      FontAttributes="Bold"
+                                                      FontSize="12"
+                                                      Text="{Binding AvailableCapacityDose2, Converter={StaticResource slotsToText}, ConverterParameter=''}"/>
+                                                <Span TextColor="Red"
+                                                      FontAttributes="Bold"
+                                                      FontSize="12"
+                                                      Text="{Binding AvailableCapacityDose2, Converter={StaticResource slotsToText}, ConverterParameter='X'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

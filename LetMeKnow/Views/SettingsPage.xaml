@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LetMeKnow.ViewModels"
+             x:Class="LetMeKnow.Views.SettingsPage">
+    <ContentPage.BindingContext>
+        <vm:SettingsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="10,20,10,0" BackgroundColor="White">
+            <Frame CornerRadius="15" Margin="40,0">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Let me know" FontSize="20"
+                           TextColor="{StaticResource Primary}"
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="End"
+                           HorizontalOptions="EndAndExpand"/>
+                    <Switch Grid.Column="1"
+                            HorizontalOptions="StartAndExpand"
+                            IsToggled="{Binding SurfAppointments}"/>
+                </StackLayout>
+            </Frame>
+            <Frame CornerRadius="15">
+                <Grid>
+                    <StackLayout Spacing="0">
+                        <Label Text="State"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand" 
+                               HorizontalOptions="Start" />
+                        <Picker ItemsSource="{Binding States}"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Primary}"
+                                ItemDisplayBinding="{Binding Name}"
+                                SelectedItem="{Binding SelectedState, Mode=TwoWay}">
+                        </Picker>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1" Spacing="0">
+                        <Label Text="District"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand" 
+                               HorizontalOptions="Start" />
+                        <Picker ItemsSource="{Binding Districts}" Visual="Material"
+                                ItemDisplayBinding="{Binding Name}" 
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Primary}"
+                                SelectedItem="{Binding SelectedDistrict, Mode=TwoWay}">
+                        </Picker>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+            <Frame Margin="4,0,4,0" CornerRadius="15">
+                <StackLayout>
+                    <Label Text="Choose age category"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand" 
+                               HorizontalOptions="Start" />
+                    <Frame CornerRadius="12" Padding="0" Margin="0">
+                        <Grid IsClippedToBounds="True" ColumnSpacing="1">
+                            <Button CornerRadius="0" Text="18+" Margin="0"
+                                BackgroundColor="Transparent"
+                                TextColor="Gray"
+                                FontAttributes="Bold"
+                                Command="{Binding Is18PlusCommand}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                             Value="True"
+                                             Binding="{Binding Is18PlusChecked}">
+                                        <Setter Property="BackgroundColor" Value="#002060"/>
+                                        <Setter Property="TextColor" Value="White"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            <Button Grid.Column="1"
+                                CornerRadius="0" Text="40+" Margin="0"
+                                BackgroundColor="Transparent"
+                                TextColor="Gray"
+                                FontAttributes="Bold"
+                                Command="{Binding Is40PlusCommand}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                             Value="True"
+                                             Binding="{Binding Is40PlusChecked}">
+                                        <Setter Property="BackgroundColor" Value="#002060"/>
+                                        <Setter Property="TextColor" Value="White"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            <Button Grid.Column="2"
+                                CornerRadius="0" Text="45+" Margin="0"
+                                BackgroundColor="Transparent"
+                                TextColor="Gray"
+                                FontAttributes="Bold"
+                                Command="{Binding Is45PlusCommand}">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                             Value="True"
+                                             Binding="{Binding Is45PlusChecked}">
+                                        <Setter Property="BackgroundColor" Value="#002060"/>
+                                        <Setter Property="TextColor" Value="White"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </Frame>
+            <Frame Margin="4,0,4,0" CornerRadius="15">
+                <StackLayout>
+                    <Label Text="Select vaccine"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand" 
+                               HorizontalOptions="Start" />
+                    <Grid RowSpacing="0">
+                        <Picker ItemsSource="{Binding Vaccines}"
+                                ItemDisplayBinding="{Binding Name}"
+                                FontSize="14"
+                                FontAttributes="Bold"
+                                TextColor="{StaticResource Primary}"
+                                SelectedItem="{Binding SelectedVaccine}"/>
+                        <Frame Grid.Column="1" 
+                               Padding="3" BorderColor="Gray" HasShadow="False"
+                               Margin="0,-5,0,7">
+                            <StackLayout Orientation="Horizontal" Spacing="5" >
+                                <Label Text="Only Free"
+                                   FontAttributes="Bold"
+                                   VerticalTextAlignment="Center"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="CenterAndExpand"/>
+                                <CheckBox IsChecked="{Binding OnlyFree}" HorizontalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+            <Frame Margin="4,0,4,0" CornerRadius="15">
+                <Frame CornerRadius="12" Padding="0" Margin="0">
+                    <Grid IsClippedToBounds="True" ColumnSpacing="1">
+                        <Button CornerRadius="0" Text="Dose 1" Margin="0"
+                                BackgroundColor="Transparent"
+                                TextColor="Gray"
+                                FontAttributes="Bold"
+                                Command="{Binding Dose1Command}">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button"
+                                             Value="True"
+                                             Binding="{Binding Dose1Enabled}">
+                                    <Setter Property="BackgroundColor" Value="#002060"/>
+                                    <Setter Property="TextColor" Value="White"/>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                        <Button Grid.Column="1"
+                                CornerRadius="0" Text="Dose 2" Margin="0"
+                                BackgroundColor="Transparent"
+                                TextColor="Gray"
+                                FontAttributes="Bold"
+                                Command="{Binding Dose2Command}">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button"
+                                             Value="True"
+                                             Binding="{Binding Dose2Enabled}">
+                                    <Setter Property="BackgroundColor" Value="#002060"/>
+                                    <Setter Property="TextColor" Value="White"/>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </Grid>
+                </Frame>
+            </Frame>
+            <Frame Margin="4,0,4,0" CornerRadius="15">
+                <StackLayout>
+                    <Label Text="Surfing speed"
+                               FontAttributes="Bold"
+                               VerticalOptions="CenterAndExpand" 
+                               HorizontalOptions="Start">
+                    </Label>
+                    <Slider Maximum="5" Minimum="1" Margin="-15,0,0,0"
+                            MinimumTrackColor="{StaticResource Primary}"
+                            ThumbColor="{StaticResource Primary}"
+                            Value="{Binding Frequency}"/>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
